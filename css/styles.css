@@ -1,0 +1,305 @@
+@theme {
+    --color-bg: #f0f7ff;
+    --color-bg-deep: #e8f4fd;
+    --color-surface: #ffffff;
+    --color-text: #16324f;
+    --color-text-secondary: #335c81;
+    --color-text-muted: #5f7d95;
+    --color-accent-1: #2563eb;
+    --color-accent-2: #f97066;
+    --color-accent-3: #d4a574;
+    --color-glass-bg: rgba(255, 255, 255, 0.82);
+    --color-glass-border: rgba(22, 50, 79, 0.10);
+    --color-vignette: rgba(0, 0, 0, 0.06);
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+</style><style> :root {
+    --color-bg: #f0f7ff;
+    --color-text: #16324f;
+    --glow-color-rgb: 37, 99, 235;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background: var(--color-bg);
+    margin: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.slide>.content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1180px;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.nav-controls {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 10px 24px;
+    border-radius: 999px;
+    border: 1px solid var(--color-glass-border);
+    box-shadow: 0 10px 30px rgba(22, 50, 79, 0.08);
+}
+
+.nav-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(37, 99, 235, 0.10);
+    color: var(--color-accent-1);
+    border-radius: 999px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.slide-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(22, 50, 79, 0.16);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.slide-dots .dot.active {
+    background: var(--color-accent-1);
+    transform: scale(1.25);
+}
+
+.slide-counter {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    min-width: 48px;
+    text-align: center;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.gradient-mesh {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    animation: float-slow 14s ease-in-out infinite;
+}
+
+.blob:nth-child(2) {
+    animation: float-drift 18s ease-in-out infinite;
+}
+
+.blob:nth-child(3) {
+    animation: float-slow 20s ease-in-out infinite reverse;
+}
+
+.blob:nth-child(4) {
+    animation: float-drift 16s ease-in-out infinite reverse;
+}
+
+@keyframes float-slow {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(50px, -40px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-30px, 35px) scale(0.92);
+    }
+
+    75% {
+        transform: translate(45px, 15px) scale(1.05);
+    }
+
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes float-drift {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+
+    33% {
+        transform: translate(-40px, -55px) scale(1.12) rotate(2deg);
+    }
+
+    66% {
+        transform: translate(35px, 28px) scale(0.9) rotate(-2deg);
+    }
+
+    100% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
+.slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    opacity: 0.02;
+    mix-blend-mode: multiply;
+}
+
+.slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 52%, var(--color-vignette) 100%);
+}
+
+.glass {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 32px rgba(22, 50, 79, 0.08);
+}
+
+.text-glow {
+    text-shadow: 0 0 18px rgba(var(--glow-color-rgb), 0.22);
+}
+
+.bar-track {
+    height: 18px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.10);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-accent-1), var(--color-accent-2));
+}
+
+.deco-shape {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.12;
+}
+
+.title-chip {
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.codebox {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.slide-1 .hero-emoji {
+    animation: float 3.2s ease-in-out infinite;
+}
+
+.small {
+    font-size: 0.92rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
